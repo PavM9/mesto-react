@@ -3,23 +3,32 @@ import Header from './Header'
 import Main from './Main'
 import Footer from './Footer'
 
-function handleEditAvatarClick() {
-  const buttonEditAvatar = document.querySelector('.profile__avatar-button');
-  buttonEditAvatar.addEventListener('click', function() {
-    document.querySelector('popup_type_avatar').classList.add('popup_is-opened');
-  });
+function handleEditAvatarClick() {  
+    document.querySelector('.popup_type_avatar').classList.add('popup_is-opened'); 
 }
+
+function handleEditProfileClick() {
+  document.querySelector('.popup_type_edit-profile').classList.add('popup_is-opened');
+}
+
+function handleAddPlaceClick() {
+  document.querySelector('.popup_type_add-card').classList.add('popup_is-opened');
+}
+
 
 function App() {
   return (
     <div className="page">
-    <Header></Header>
-    <Main
-      onClick={handleEditAvatarClick}
-    ></Main>
-    <Footer></Footer>
+      <Header/>
+      <Main
+        onEditAvatar={handleEditAvatarClick}
+        onEditProfile={handleEditProfileClick}
+        onAddPlace={handleAddPlaceClick} 
 
-    {/* <section className="popup popup_type_edit-profile">
+      />
+      <Footer/>
+
+    <section className="popup popup_type_edit-profile">
       <div className="popup__container">
         <div className="popup__content">
           <h2 className="popup__title">Редактировать профиль</h2>
@@ -87,13 +96,13 @@ function App() {
         <figcaption className="popup__image-caption"></figcaption>
         <button className="popup__close-button" type="button"></button>
       </figure>
-    </section> */}
+    </section>
 
     <section className="popup popup_type_avatar">
       <div className="popup__container">
         <div className="popup__content">
           <h2 className="popup__title">Обновить аватар</h2>
-          <form className="popup__form-container" name="avatar-form" novalidate>
+          <form className="popup__form-container" name="avatar-form" noValidate>
             <input className="popup__form-item popup__form-item_avatar_link"
               required
               type="url"

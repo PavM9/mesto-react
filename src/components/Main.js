@@ -1,20 +1,36 @@
 import React from "react";
 
-function Main() {
+
+function Main({ onEditAvatar, onEditProfile, onAddPlace }) {
   return (
     <main>
       <section className="profile">
-        <button className="profile__avatar-button" type="button">
-          <img className="profile__avatar" src="#" alt="Аватар профиля"/>
+        <button 
+          className="profile__avatar-button" 
+          type="button" 
+          onClick={onEditAvatar}>
+          <img 
+            className="profile__avatar" 
+            src="#" 
+            alt="Аватар профиля"
+          />
         </button>
         <div className="profile__info">
           <div className="profile__name-container">
             <h1 className="profile__name"></h1>
-            <button className="profile__edit-button" type="button"></button>
+            <button 
+              className="profile__edit-button" 
+              type="button"
+              onClick={onEditProfile}
+            />
           </div>
           <p className="profile__description"></p>
         </div>
-        <button className="profile__add-card-button" type="button"></button>
+        <button 
+          className="profile__add-card-button"
+          type="button"
+          onClick={onAddPlace}
+        />
       </section>
 
       <section className="cards" aria-label="Галерея фото">
