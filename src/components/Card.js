@@ -1,5 +1,4 @@
 import React from "react";
-import api from "../utils/api.js"
 
 function Card({ card, onCardClick }) {
 
