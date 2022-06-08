@@ -1,14 +1,12 @@
-import React from "react";
-
 function PopupWithForm({ isOpen, name, title, children, submitText, onClose }) {
+  function handleCloseClick(){
+    onClose()
+ }
+
   return (
-    <section className={
-      isOpen
-      ? `popup popup_type_${name} popup_is-opened`
-      : `popup popup_type_${name}`}
-      onClick={() => {
-        onClose();
-      }}
+    <section
+      className={`popup ${isOpen && `popup_is-opened`}`}
+      onClick={handleCloseClick}
     >
       <div
         className="popup__container"
@@ -36,9 +34,7 @@ function PopupWithForm({ isOpen, name, title, children, submitText, onClose }) {
         <button
           className="popup__close-button"
           type="button"
-          onClick={() => {
-            onClose();
-          }}
+          onClick={handleCloseClick}
         />
       </div>
     </section>

@@ -1,5 +1,3 @@
-import React from "react";
-
 function ImagePopup({ card, onClose }) {
   return (
     <section
@@ -23,7 +21,13 @@ function ImagePopup({ card, onClose }) {
         <figcaption className="popup__image-caption">
           {card.name}
         </figcaption>
-        <button className="popup__close-button" type="button"/>
+        <button
+          className="popup__close-button"
+          type="button"
+          onClick={() => {
+            onClose();
+          }}
+        />
       </figure>
     )}
     </section>
