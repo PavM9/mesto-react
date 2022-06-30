@@ -1,7 +1,7 @@
 function PopupWithForm({ isOpen, name, title, children, submitText, onClose, onSubmit }) {
   function handleCloseClick(){
     onClose()
- }
+  }
 
   return (
     <section

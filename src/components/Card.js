@@ -49,20 +49,11 @@ const cardLikeButtonClassName = (
           {card.name}
         </h2>
         <div className="card__like-container">
-        {
-          isLiked && <button
+        <button
             type="button"
             className={cardLikeButtonClassName}
-            onClick={handleDislike}
-          ></button>
-        }
-        {
-          !isLiked && <button
-            type="button"
-            className={cardLikeButtonClassName}
-            onClick={handleLike}
-          ></button>
-        }
+            onClick={isLiked ? handleDislike : handleLike}
+        />
           <span className="card__like-counter">
             {card.likes.length}
           </span>

@@ -4,16 +4,19 @@ import CurrentUserContext from "../contexts/CurrentUserContext";
 import Header from './Header'
 import Main from './Main'
 import Footer from './Footer'
-import PopupWithForm from "./PopupWithForm"
+// import PopupWithForm from "./PopupWithForm"
 import ImagePopup from "./ImagePopup"
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
 import AddPlacePopup from './AddPlacePopup';
+import ConfirmDeletePopup from './ConfirmDeletePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
   const [isAddPlacePopupOpen, setIsAddPlacePopupOpen] = React.useState(false);
   const [isEditAvatarPopupOpen, setIsEditAvatarPopupOpen] = React.useState(false);
+  const [isConfirmDeletePopupOpen, setConfirmDeletePopupOpen] = React.useState(false);
+  const [deletingCard, setDeletingCard] = React.useState({});
   const [selectedCard, setSelectedCard] = React.useState(null);
   const [currentUser, setCurrentUser] = React.useState({});
   const [cards, setCards] = React.useState([])
@@ -62,10 +65,16 @@ function App() {
       .deleteCard(card._id)
       .then(() => {
 				setCards(cards => cards.filter((c) => c._id !== card._id));
+        closeAllPopups();
       })
       .catch((err) => {
         console.error(err);
       });
+  }
+
+  function handleConfirmDelete(card) {
+    setDeletingCard(card);
+    setConfirmDeletePopupOpen(true);
   }
 
   function handleEditAvatarClick() {
@@ -84,20 +93,23 @@ function App() {
     setIsEditAvatarPopupOpen(false);
     setIsEditProfilePopupOpen(false);
     setIsAddPlacePopupOpen(false);
+    setConfirmDeletePopupOpen(false);
     setSelectedCard(null);
   };
 
   React.useEffect(() => {
-    const onEscClose = (event) => {
-      if (event.key === "Escape") {
-        closeAllPopups();
-      }
-    };
-    document.addEventListener("keydown", onEscClose);
-    return () => {
-      document.removeEventListener("keydown", onEscClose);
-    };
-  }, []);
+    if (isEditAvatarPopupOpen || isEditProfilePopupOpen || isAddPlacePopupOpen || selectedCard) {
+      const onEscClose = (event) => {
+        if (event.key === "Escape") {
+          closeAllPopups();
+        }
+      };
+      document.addEventListener("keydown", onEscClose);
+      return () => {
+        document.removeEventListener("keydown", onEscClose);
+      };
+    }
+  }, [isEditAvatarPopupOpen, isEditProfilePopupOpen, isAddPlacePopupOpen, selectedCard]);
 
   function handleUpdateAvatar(data) {
 		api
@@ -148,7 +160,7 @@ function App() {
           onCardClick={setSelectedCard}
           onCardLike={handleCardLike}
           onCardDislike={handleCardDislike}
-          onCardDelete={handleCardDelete}
+          onCardDelete={handleConfirmDelete}
         />
 
         <Footer/>
@@ -176,11 +188,11 @@ function App() {
           onSubmit={handleAddPlaceSubmit}
         />
 
-        <PopupWithForm
+        <ConfirmDeletePopup
+          card={deletingCard}
+          isOpen={isConfirmDeletePopupOpen}
           onClose={closeAllPopups}
-          name="confirm"
-          title="Вы уверены?"
-          submitText="Да"
+          onSubmit={handleCardDelete}
         />
     </div>
   </CurrentUserContext.Provider>

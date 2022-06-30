@@ -5,6 +5,12 @@ function AddPlacePopup ({ isOpen, onClose, onSubmit}) {
   const [name, setName] = React.useState("");
 	const [link, setLink] = React.useState("");
 
+  React.useEffect(() => {
+    setName('');
+    setLink('');
+  }, [isOpen]);
+
+
   return (
     <PopupWithForm
       isOpen={isOpen}
