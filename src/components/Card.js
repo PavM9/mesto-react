@@ -63,11 +63,6 @@ const cardLikeButtonClassName = (
             onClick={handleLike}
           ></button>
         }
-          {/* <button
-            className={cardLikeButtonClassName}
-            type="button"
-            onClick={onCardLike}
-          /> */}
           <span className="card__like-counter">
             {card.likes.length}
           </span>

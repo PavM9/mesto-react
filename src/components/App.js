@@ -30,28 +30,6 @@ function App() {
       });
   }, []);
 
-  // React.useEffect(() => {
-  //   api
-  //     .getProfile()
-  //     .then((userData) => {
-  //       setCurrentUser(userData);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, []);
-
-  // React.useEffect(() => {
-  //   api
-  //     .getInitialCards()
-  //     .then((cards) => {
-  //       setCards(cards);
-  //     })
-  //     .catch((err) => {
-  //       console.error(err);
-  //     });
-  // }, []);
-
   function handleCardLike(card) {
     api
       .addLike(card._id)
