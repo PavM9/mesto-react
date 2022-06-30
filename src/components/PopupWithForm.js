@@ -1,4 +1,4 @@
-function PopupWithForm({ isOpen, name, title, children, submitText, onClose }) {
+function PopupWithForm({ isOpen, name, title, children, submitText, onClose, onSubmit }) {
   function handleCloseClick(){
     onClose()
  }
@@ -17,6 +17,10 @@ function PopupWithForm({ isOpen, name, title, children, submitText, onClose }) {
         <div className="popup__content">
           <h2 className="popup__title">{title}</h2>
           <form
+            onSubmit={(event) => {
+              event.preventDefault();
+              onSubmit(event);
+            }}
             className="popup__form-container"
             name={name}
             noValidate
@@ -25,7 +29,7 @@ function PopupWithForm({ isOpen, name, title, children, submitText, onClose }) {
             <button
               className="popup__submit-button"
               type="submit"
-              disabled
+              // disabled
             >
               {submitText}
             </button>
@@ -38,7 +42,6 @@ function PopupWithForm({ isOpen, name, title, children, submitText, onClose }) {
         />
       </div>
     </section>
-
   );
 }
 

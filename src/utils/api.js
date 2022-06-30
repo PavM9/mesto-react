@@ -36,15 +36,12 @@ class Api {
 
 
   //Редактирование профиля
-  editProfile(item) {
+  editProfile(data) {
     return fetch(`${this._groupUrl}/users/me`, {
       method: 'PATCH',
       headers: this._headers,
     // делает из объекта строку
-      body: JSON.stringify({
-        name: item.name,
-        about: item.description
-      })
+      body: JSON.stringify(data)
     })
     .then(this._checkResponse)
   }
@@ -88,39 +85,6 @@ class Api {
     })
     .then(this._checkResponse)
   }
-
-  // changeLikeCardStatus(cardId, setLiked) {
-  //   const updateLike = {
-  //     method: 'PUT',
-  //     headers: this._headers
-  //   }
-
-  //   const deleteLike = {
-  //     method: 'DELETE',
-  //     headers: this._headers
-  //   }
-  //   return fetch(`${this._groupUrl}/cards/likes/${cardId}`,
-  //     setLiked ? updateLike : deleteLike
-  //   );
-  // }
-
-  // changeLikeCardStatus(cardId, setLiked) {
-    // const updateLike = {
-    //   method: 'PUT',
-    //   headers: this._headers
-    // }
-
-    // const deleteLike = {
-    //   method: 'DELETE',
-    //   headers: this._headers
-    // }
-  //   return fetch(`${this._groupUrl}/cards/likes/${cardId}`, {
-
-  //       setLiked ? this.addLike(cardId) : this.removeLike(cardId)
-  //     })
-  //     .then(this._checkResponse)
-  //   }
-  // }
 
   //Обновление аватара пользователя
   editAvatar(item) {

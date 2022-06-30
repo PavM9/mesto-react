@@ -6,6 +6,7 @@ import Main from './Main'
 import Footer from './Footer'
 import PopupWithForm from "./PopupWithForm"
 import ImagePopup from "./ImagePopup"
+import EditProfilePopup from './EditProfilePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -118,6 +119,18 @@ function App() {
     };
   }, []);
 
+  function handleUpdateUser(userData) {
+    api
+      .editProfile(userData)
+      .then((data) => {
+        setCurrentUser(data)
+        closeAllPopups()
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -159,36 +172,11 @@ function App() {
           <span className="popup__error avatar-link-input-error"></span>
         </PopupWithForm>
 
-        <PopupWithForm
+        <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
           onClose={closeAllPopups}
-          name="edit-profile"
-          title="Редактировать профиль"
-          submitText="Сохранить"
-        >
-          <input
-            className="popup__form-item popup__form-item_input_name"
-            minLength="2"
-            maxLength="40"
-            required
-            type="text"
-            name="name"
-            id="name-input"
-            placeholder="Имя"
-          />
-          <span className="popup__error name-input-error"></span>
-          <input
-            className="popup__form-item popup__form-item_input_description"
-            minLength="2"
-            maxLength="200"
-            required
-            type="text"
-            name="description"
-            id="description-input"
-            placeholder="О себе"
-          />
-          <span className="popup__error description-input-error"></span>
-        </PopupWithForm>
+          onUpdateUser={handleUpdateUser}
+        />
 
         <PopupWithForm
           isOpen={isAddPlacePopupOpen}
