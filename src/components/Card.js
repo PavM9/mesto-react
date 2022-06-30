@@ -1,15 +1,19 @@
 import React from "react";
 import CurrentUserContext from "../contexts/CurrentUserContext";
 
-function Card({ card, onCardClick, onCardLike, onCardDelete }) {
+function Card({ card, onCardClick, onCardLike, onCardDislike, onCardDelete }) {
   const currentUser = React.useContext(CurrentUserContext);
 
   const handleCardClick = () => {
     onCardClick(card);
   };
 
-  const handleLikeClick = () => {
+  const handleLike = () => {
     onCardLike(card)
+  };
+
+  const handleDislike = () => {
+    onCardDislike(card)
   };
 
 	const handleDeleteClick = () => {
@@ -45,11 +49,25 @@ const cardLikeButtonClassName = (
           {card.name}
         </h2>
         <div className="card__like-container">
-          <button
+        {
+          isLiked && <button
+            type="button"
+            className={cardLikeButtonClassName}
+            onClick={handleDislike}
+          ></button>
+        }
+        {
+          !isLiked && <button
+            type="button"
+            className={cardLikeButtonClassName}
+            onClick={handleLike}
+          ></button>
+        }
+          {/* <button
             className={cardLikeButtonClassName}
             type="button"
-          >
-          </button>
+            onClick={onCardLike}
+          /> */}
           <span className="card__like-counter">
             {card.likes.length}
           </span>
@@ -58,6 +76,7 @@ const cardLikeButtonClassName = (
       <button
         className="card__delete-button"
         style={{display: `${cardDeleteButtonVisibility}`}}
+        onClick={handleDeleteClick}
       />
     </li>
   );

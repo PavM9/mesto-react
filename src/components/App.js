@@ -27,6 +27,66 @@ function App() {
       });
   }, []);
 
+  // React.useEffect(() => {
+  //   api
+  //     .getProfile()
+  //     .then((userData) => {
+  //       setCurrentUser(userData);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, []);
+
+  // React.useEffect(() => {
+  //   api
+  //     .getInitialCards()
+  //     .then((cards) => {
+  //       setCards(cards);
+  //     })
+  //     .catch((err) => {
+  //       console.error(err);
+  //     });
+  // }, []);
+
+  function handleCardLike(card) {
+    api
+      .addLike(card._id)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  function handleCardDislike(card) {
+    api
+      .removeLike(card._id)
+      .then((newCard) => {
+        setCards((state) =>
+          state.map((c) => (c._id === card._id ? newCard : c))
+        );
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
+  // Отправляем запрос в API на удаление карточки
+  function handleCardDelete(card) {
+    api
+      .deleteCard(card._id)
+      .then(() => {
+				setCards(cards => cards.filter((c) => c._id !== card._id));
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   function handleEditAvatarClick() {
     setIsEditAvatarPopupOpen(!isEditAvatarPopupOpen);
   };
@@ -69,6 +129,9 @@ function App() {
           onAddPlace={handleAddPlaceClick}
           cards={cards}
           onCardClick={setSelectedCard}
+          onCardLike={handleCardLike}
+          onCardDislike={handleCardDislike}
+          onCardDelete={handleCardDelete}
         />
 
         <Footer/>

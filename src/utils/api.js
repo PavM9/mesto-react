@@ -15,6 +15,7 @@ class Api {
   //Загрузка информации о пользователе с сервера
   _getProfile() {
     return fetch(`${this._groupUrl}/users/me`, {
+      method: 'GET',
       headers: this._headers
     })
     .then(this._checkResponse)
@@ -23,6 +24,7 @@ class Api {
   //Загрузка карточек с сервера
   _getInitialCards() {
     return fetch(`${this._groupUrl}/cards`, {
+      method: 'GET',
       headers: this._headers
     })
     .then(this._checkResponse)
@@ -86,6 +88,39 @@ class Api {
     })
     .then(this._checkResponse)
   }
+
+  // changeLikeCardStatus(cardId, setLiked) {
+  //   const updateLike = {
+  //     method: 'PUT',
+  //     headers: this._headers
+  //   }
+
+  //   const deleteLike = {
+  //     method: 'DELETE',
+  //     headers: this._headers
+  //   }
+  //   return fetch(`${this._groupUrl}/cards/likes/${cardId}`,
+  //     setLiked ? updateLike : deleteLike
+  //   );
+  // }
+
+  // changeLikeCardStatus(cardId, setLiked) {
+    // const updateLike = {
+    //   method: 'PUT',
+    //   headers: this._headers
+    // }
+
+    // const deleteLike = {
+    //   method: 'DELETE',
+    //   headers: this._headers
+    // }
+  //   return fetch(`${this._groupUrl}/cards/likes/${cardId}`, {
+
+  //       setLiked ? this.addLike(cardId) : this.removeLike(cardId)
+  //     })
+  //     .then(this._checkResponse)
+  //   }
+  // }
 
   //Обновление аватара пользователя
   editAvatar(item) {
