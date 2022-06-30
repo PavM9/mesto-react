@@ -87,13 +87,11 @@ class Api {
   }
 
   //Обновление аватара пользователя
-  editAvatar(item) {
+  editAvatar(data) {
     return fetch(`${this._groupUrl}/users/me/avatar`, {
       method: 'PATCH',
       headers: this._headers,
-      body: JSON.stringify({
-        avatar: item.avatar
-      })
+      body: JSON.stringify(data)
     })
     .then(this._checkResponse)
   }

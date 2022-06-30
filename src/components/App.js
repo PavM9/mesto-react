@@ -7,6 +7,7 @@ import Footer from './Footer'
 import PopupWithForm from "./PopupWithForm"
 import ImagePopup from "./ImagePopup"
 import EditProfilePopup from './EditProfilePopup';
+import EditAvatarPopup from './EditAvatarPopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -119,6 +120,18 @@ function App() {
     };
   }, []);
 
+  function handleUpdateAvatar(data) {
+		api
+      .editAvatar(data)
+      .then((item) => {
+        setCurrentUser({...currentUser, avatar: item.avatar});
+        closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+	}
+
   function handleUpdateUser(userData) {
     api
       .editProfile(userData)
@@ -154,23 +167,11 @@ function App() {
           onClose={closeAllPopups}
         />
 
-        <PopupWithForm
+        <EditAvatarPopup
           isOpen={isEditAvatarPopupOpen}
           onClose={closeAllPopups}
-          name="avatar"
-          title="Обновить аватар"
-          submitText="Сохранить"
-        >
-          <input
-            className="popup__form-item popup__form-item_avatar_link"
-            required
-            type="url"
-            name="avatar"
-            id="avatar-link-input"
-            placeholder="Ссылка на картинку"
-          />
-          <span className="popup__error avatar-link-input-error"></span>
-        </PopupWithForm>
+          onUpdateAvatar={handleUpdateAvatar}
+        />
 
         <EditProfilePopup
           isOpen={isEditProfilePopupOpen}
