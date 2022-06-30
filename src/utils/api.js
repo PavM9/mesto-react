@@ -47,14 +47,11 @@ class Api {
   }
 
   //Добавление новой карточки
-  addCard(item) {
+  addCard(data) {
     return fetch(`${this._groupUrl}/cards`, {
       method: 'POST',
       headers: this._headers,
-      body: JSON.stringify({
-        name: item.name,
-        link: item.link,
-      })
+      body: JSON.stringify(data)
     })
     .then(this._checkResponse)
   }

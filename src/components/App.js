@@ -8,6 +8,7 @@ import PopupWithForm from "./PopupWithForm"
 import ImagePopup from "./ImagePopup"
 import EditProfilePopup from './EditProfilePopup';
 import EditAvatarPopup from './EditAvatarPopup';
+import AddPlacePopup from './AddPlacePopup';
 
 function App() {
   const [isEditProfilePopupOpen, setIsEditProfilePopupOpen] = React.useState(false);
@@ -144,6 +145,18 @@ function App() {
       });
   }
 
+  function handleAddPlaceSubmit(card) {
+    api
+      .addCard(card)
+      .then((newCard) => {
+        setCards([newCard, ...cards]);
+				closeAllPopups();
+      })
+      .catch((err) => {
+        console.error(err);
+      });
+  }
+
   return (
     <CurrentUserContext.Provider value={currentUser}>
       <div className="page">
@@ -179,34 +192,11 @@ function App() {
           onUpdateUser={handleUpdateUser}
         />
 
-        <PopupWithForm
+        <AddPlacePopup
           isOpen={isAddPlacePopupOpen}
           onClose={closeAllPopups}
-          name="add-card"
-          title="Новое место"
-          submitText="Создать"
-        >
-          <input
-            className="popup__form-item popup__form-item_card_title"
-            minLength="2"
-            maxLength="30"
-            required
-            type="text"
-            name="name"
-            id="title-input"
-            placeholder="Название"
-          />
-          <span className="popup__error title-input-error"></span>
-          <input
-            className="popup__form-item popup__form-item_card_link"
-            required
-            type="url"
-            name="link"
-            id="link-input"
-            placeholder="Ссылка на картинку"
-          />
-          <span className="popup__error link-input-error"></span>
-        </PopupWithForm>
+          onSubmit={handleAddPlaceSubmit}
+        />
 
         <PopupWithForm
           onClose={closeAllPopups}
